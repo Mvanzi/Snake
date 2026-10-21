@@ -1,5 +1,5 @@
 using UnityEngine;
-namespace Snake.Model
+namespace Snake.Assets.Model
 {
     public interface ISnake
     {
@@ -9,6 +9,9 @@ namespace Snake.Model
         public Coordinate GetNextHeadPosition();
         public void MoveTo(Coordinate nextHeadPos);
         public void Grow();
-
+        public void TurnUp();
+        public void TurnDown();
+        public void TurnLeft();
+        public void TurnRight();
     }
 }
