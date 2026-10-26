@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SnakeEntity : Entity
+public class SnakeBodyEntity : Entity
 {
-    
+    public void OnCollide(IGameContext context)
+    {
+        context.EndGame();
+    }
 }
