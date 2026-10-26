@@ -1,8 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class WallEntity : Entity
+namespace Snake.Assets.Model
 {
-    
+
+    public class WallEntity : Entity
+    {
+        public override void OnCollide(IGameContext context)
+        {
+            context.EndGame();
+        }
+    }
 }

@@ -5,6 +5,7 @@ namespace Snake.Assets.Model {
 
     public class EmptyEntity : Entity
     {
-        public void OnCollide(IGameContext collide) { }
+        public override void OnCollide(IGameContext context) { }
+        public override bool IsEmpty() => true;
     }
 }
