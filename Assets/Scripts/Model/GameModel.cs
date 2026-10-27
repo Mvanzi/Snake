@@ -45,6 +45,20 @@ namespace Snake.Assets.Scripts.Model
             LastClearedTail = snake.GetTail();
             Board.FreeCellAt(LastClearedTail);
             Coordinate nextHeadPos = snake.GetNextHeadPosition();
+            Entity targetEntity = Board.GetEntityAt(nextHeadPos);
+            targetEntity.OnCollide(this);
+            snake.MoveTo(nextHeadPos);
+            Board.PlaceEntityAt(nextHeadPos, new SnakeBodyEntity());
+
+            if (pendingGrowth)
+            {
+                pendingGrowth = false;
+                DidGrowInLastStep = true;
+                snake.Grow();
+                Board.PlaceEntityAt(snake.GetTail(), new SnakeBodyEntity());
+            }
+
+
         }
     }
 }
