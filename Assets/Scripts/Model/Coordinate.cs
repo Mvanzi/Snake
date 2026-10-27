@@ -1,5 +1,5 @@
 using UnityEngine;
-namespace Snake.Assets.Model
+namespace Snake.Assets.Scripts.Model
 {
 
     public struct Coordinate

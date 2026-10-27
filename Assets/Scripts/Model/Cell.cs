@@ -1,26 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class Cell 
+namespace Snake.Assets.Scripts.Model
 {
-    private Entity snake, wall, fruit;
+    public class Cell : ICell
+    {
+        public Entity CurrentEntity { get; set; }
+        public bool IsEmpty => CurrentEntity.IsEmpty();
 
-    public Entity Snake { get => snake; set => snake = value; }
-    public Entity Wall { get => wall; set => wall = value; }
-    public Entity Fruit { get => fruit; set => fruit = value; }
+        public Cell()
+        {
+            CurrentEntity = new EmptyEntity();
+        }
 
-    public bool HasWall()
-    {
-        return wall != null;
-    }
-    public bool HasSnake()
-    {
-        return snake != null;
-    }
-    public bool HasFruit()
-    {
-        return fruit != null;
+        public void Clear()
+        {
+            CurrentEntity = new EmptyEntity();
+        }
     }
 }
 

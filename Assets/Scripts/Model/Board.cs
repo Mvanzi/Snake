@@ -1,0 +1,61 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+namespace Snake.Assets.Scripts.Model
+{
+
+    public class Board : IBoard
+    {
+        public int Width { get; }
+        public int Height { get; }
+        public ICell[,] matrix;
+
+        public Board(int width, int height)
+        {
+            Width = width;
+            Height = height;
+            matrix = new ICell[Width, Height];
+        }
+
+        public Entity GetEntityAt(Coordinate pos)
+        {
+            return matrix[pos.X, pos.Y].CurrentEntity;
+        }
+
+        public void PlaceEntityAt(Coordinate pos, Entity entity)
+        {
+            matrix[pos.X, pos.Y].CurrentEntity = entity;
+        }
+
+        public void FreeCellAt(Coordinate pos)
+        {
+            matrix[pos.X, pos.Y].Clear();
+        }
+
+        private bool IsFreeSurroundings(Coordinate pos)
+        {
+            bool isAvailable = true;
+            for (int i = pos.X - 1; i <= pos.X + 1 && isAvailable; i++)
+            {
+                for (int j = pos.Y - 1; j <= pos.Y + 1 && isAvailable; j++)
+                {
+                    isAvailable = matrix[i, j].IsEmpty;
+                }
+            }
+            return isAvailable;
+        }
+
+        public Coordinate GetFreePosition()
+        {
+            bool isAvailable = false;
+            Coordinate newFreePosition = new Coordinate(0, 0);
+
+            while (!isAvailable)
+            {
+                newFreePosition = new Coordinate(Random.Next(1, Width - 1), Random.Next(1, Height - 1));
+                isAvailable = IsFreeSurroundings(newFreePosition);
+            }
+            return newFreePosition;
+        }
+    }
+}
