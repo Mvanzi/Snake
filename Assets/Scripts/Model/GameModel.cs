@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 namespace Snake.Assets.Scripts.Model
-{ 
+{
 
     public class GameModel : IGameContext
     {
@@ -57,8 +57,43 @@ namespace Snake.Assets.Scripts.Model
                 snake.Grow();
                 Board.PlaceEntityAt(snake.GetTail(), new SnakeBodyEntity());
             }
+        }
 
+        public void RespawnFruit()
+        {
+            Board.FreeCellAt(FruitPosition);
+            FruitPosition = Board.GetFreePosition();
+            Board.PlaceEntityAt(FruitPosition, new RegularFruit());
+        }
 
+        public void GrowSnake()
+        {
+            pendingGrowth = true;
+        }
+
+        public void EndGame()
+        {
+            IsGameOver = true;
+        }
+
+        public void TurnSnakeUp()
+        {
+            snake.TurnUp();
+        }
+
+        public void TurnSnakeDown()
+        {
+            snake.TurnDown();
+        }
+
+        public void TurnSnakeLeft()
+        {
+            snake.TurnLeft();
+        }
+
+        public void TurnSnakeRight()
+        {
+            snake.TurnRight();
         }
     }
 }

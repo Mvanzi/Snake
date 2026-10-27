@@ -19,17 +19,17 @@ namespace Snake.Assets.Scripts.Model
 
         public Entity GetEntityAt(Coordinate pos)
         {
-            return matrix[pos.X, pos.Y].CurrentEntity;
+            return matrix[pos.X, pos.Z].CurrentEntity;
         }
 
         public void PlaceEntityAt(Coordinate pos, Entity entity)
         {
-            matrix[pos.X, pos.Y].CurrentEntity = entity;
+            matrix[pos.X, pos.Z].CurrentEntity = entity;
         }
 
         public void FreeCellAt(Coordinate pos)
         {
-            matrix[pos.X, pos.Y].Clear();
+            matrix[pos.X, pos.Z].Clear();
         }
 
         private bool IsFreeSurroundings(Coordinate pos)
@@ -37,7 +37,7 @@ namespace Snake.Assets.Scripts.Model
             bool isAvailable = true;
             for (int i = pos.X - 1; i <= pos.X + 1 && isAvailable; i++)
             {
-                for (int j = pos.Y - 1; j <= pos.Y + 1 && isAvailable; j++)
+                for (int j = pos.Z - 1; j <= pos.Z + 1 && isAvailable; j++)
                 {
                     isAvailable = matrix[i, j].IsEmpty;
                 }

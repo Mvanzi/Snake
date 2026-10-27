@@ -5,12 +5,12 @@ namespace Snake.Assets.Scripts.Model
     public struct Coordinate
     {
         public readonly int X;
-        public readonly int Y;
+        public readonly int Z;
 
-        public Coordinate(int x, int y)
+        public Coordinate(int x, int z)
         {
             X = x;
-            Y = y;
+            Z = z;
         }
     }
 }
