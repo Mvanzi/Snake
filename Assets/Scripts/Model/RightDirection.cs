@@ -1,6 +1,4 @@
-using UnityEngine;
-namespace Snake.Assets.Model
-{
+
     public class RightDirection : IDirection
     {
         public Coordinate GetNextCoordinate(Coordinate current)
@@ -24,4 +22,3 @@ namespace Snake.Assets.Model
             return this;
         }
     }
-}
