@@ -1,0 +1,14 @@
+C:\Users\Alejo\UNI\AÑO_5\INGENIERIA_DE_APLICACIONES\SnakeConsola\SnakeConsola\obj\Debug\net8.0\SnakeConsola.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Alejo\UNI\AÑO_5\INGENIERIA_DE_APLICACIONES\SnakeConsola\SnakeConsola\obj\Debug\net8.0\SnakeConsola.AssemblyInfoInputs.cache
+C:\Users\Alejo\UNI\AÑO_5\INGENIERIA_DE_APLICACIONES\SnakeConsola\SnakeConsola\obj\Debug\net8.0\SnakeConsola.AssemblyInfo.cs
+C:\Users\Alejo\UNI\AÑO_5\INGENIERIA_DE_APLICACIONES\SnakeConsola\SnakeConsola\obj\Debug\net8.0\SnakeConsola.csproj.CoreCompileInputs.cache
+C:\Users\Alejo\UNI\AÑO_5\INGENIERIA_DE_APLICACIONES\SnakeConsola\SnakeConsola\bin\Debug\net8.0\SnakeConsola.exe
+C:\Users\Alejo\UNI\AÑO_5\INGENIERIA_DE_APLICACIONES\SnakeConsola\SnakeConsola\bin\Debug\net8.0\SnakeConsola.deps.json
+C:\Users\Alejo\UNI\AÑO_5\INGENIERIA_DE_APLICACIONES\SnakeConsola\SnakeConsola\bin\Debug\net8.0\SnakeConsola.runtimeconfig.json
+C:\Users\Alejo\UNI\AÑO_5\INGENIERIA_DE_APLICACIONES\SnakeConsola\SnakeConsola\bin\Debug\net8.0\SnakeConsola.dll
+C:\Users\Alejo\UNI\AÑO_5\INGENIERIA_DE_APLICACIONES\SnakeConsola\SnakeConsola\bin\Debug\net8.0\SnakeConsola.pdb
+C:\Users\Alejo\UNI\AÑO_5\INGENIERIA_DE_APLICACIONES\SnakeConsola\SnakeConsola\obj\Debug\net8.0\SnakeConsola.dll
+C:\Users\Alejo\UNI\AÑO_5\INGENIERIA_DE_APLICACIONES\SnakeConsola\SnakeConsola\obj\Debug\net8.0\refint\SnakeConsola.dll
+C:\Users\Alejo\UNI\AÑO_5\INGENIERIA_DE_APLICACIONES\SnakeConsola\SnakeConsola\obj\Debug\net8.0\SnakeConsola.pdb
+C:\Users\Alejo\UNI\AÑO_5\INGENIERIA_DE_APLICACIONES\SnakeConsola\SnakeConsola\obj\Debug\net8.0\SnakeConsola.genruntimeconfig.cache
+C:\Users\Alejo\UNI\AÑO_5\INGENIERIA_DE_APLICACIONES\SnakeConsola\SnakeConsola\obj\Debug\net8.0\ref\SnakeConsola.dll

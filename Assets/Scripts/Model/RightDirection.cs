@@ -5,7 +5,7 @@ namespace Snake.Assets.Model
     {
         public Coordinate GetNextCoordinate(Coordinate current)
         {
-            return new Coordinate(current.X + 1, current.Y);
+            return new Coordinate(current.X + 1, current.Z);
         }
         public IDirection TurnUp()
         {
