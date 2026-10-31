@@ -1,11 +1,9 @@
-using UnityEngine;
-namespace Snake.Assets.Model
-{
+
     public class LeftDirection : IDirection
     {
         public Coordinate GetNextCoordinate(Coordinate current)
         {
-            return new Coordinate(current.X - 1, current.Y);
+            return new Coordinate(current.X - 1, current.Z);
         }
         public IDirection TurnUp()
         {
@@ -13,7 +11,7 @@ namespace Snake.Assets.Model
         }
         public IDirection TurnDown()
         {
-            return DownDirection();
+            return new DownDirection();
         }
         public IDirection TurnLeft()
         {
@@ -24,4 +22,3 @@ namespace Snake.Assets.Model
             return this;
         }
     }
-}
