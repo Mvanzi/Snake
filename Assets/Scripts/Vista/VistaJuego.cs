@@ -58,7 +58,6 @@ public class VistaJuego : MonoBehaviour, IGameView
             partesGraficasSerpiente.Add(nuevoSegmento);
         }
 
-        // 2. Destruimos excedentes si se achicó o reinició
         while (partesGraficasSerpiente.Count > posicionesSerpiente.Count)
         {
             int ultimoIndice = partesGraficasSerpiente.Count - 1;
@@ -76,7 +75,6 @@ public class VistaJuego : MonoBehaviour, IGameView
             );
         }
 
-        // 4. Seguimiento de cámara a la cabeza
         if (posicionesSerpiente.Count > 0 && camarita != null)
         {
             BoardCoordinate cabeza = posicionesSerpiente[posicionesSerpiente.Count - 1];
@@ -106,7 +104,6 @@ public class VistaJuego : MonoBehaviour, IGameView
         }
     }
 
-    // Método auxiliar para desacoplar el origen del objeto gráfico
     private GameObject CrearInstancia(GameObject prefab, PrimitiveType primitivaPorDefecto, Color colorPorDefecto)
     {
         if (prefab != null)
