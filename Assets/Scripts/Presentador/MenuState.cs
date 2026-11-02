@@ -24,7 +24,6 @@ public class MenuState : IGameState
         bool hayPartida = _presenter.SaveRepository != null && _presenter.SaveRepository.HayPartidaGuardada();
         _vistaUI.SetContinueButtonActive(hayPartida);
 
-        // 1. Inicializa y dibuja el escenario para que el jugador vea la serpiente lista
         _modelo.IniciarJuego();
         _vistaJuego.ClearAll();
         _vistaJuego.RenderWalls(MapearPosiciones(_modelo.ObtenerPosicionesParedes()));
@@ -35,11 +34,10 @@ public class MenuState : IGameState
         _vistaUI.OnContinueClicked += ContinuarPartidaGuardada;
     }
 
-    public void ProcesarTick() { } // La serpiente no se mueve hasta que el jugador decida arrancar
+    public void ProcesarTick() { }
 
     public void ProcesarDireccion(KeyDirection direccion)
     {
-        // En cuanto el jugador presiona W/A/S/D o flechas, arranca a jugar en esa direccion
         IniciarPartidaConDireccion(direccion);
     }
 

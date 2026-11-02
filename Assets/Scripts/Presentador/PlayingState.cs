@@ -33,17 +33,14 @@ public class PlayingState : IGameState
 
     public void ProcesarTick()
     {
-        // 1. Avanza un paso en la simulacion
         _modelo.AvanzarTurno();
 
-        // 2. Consulta si hubo choque o fin de partida
         if (_modelo.EstaGameOver)
         {
             _presenter.CambiarEstado(new GameOverState(_presenter, _modelo, _vistaJuego, _vistaUI));
             return;
         }
 
-        // 3. Mapea al DTO PosicionTablero y pasa los datos a la vista para renderizar
         _vistaJuego.RenderSnake(MapearPosiciones(_modelo.ObtenerPosicionesSerpiente()));
         _vistaJuego.RenderFruit(MapearPosicion(_modelo.ObtenerPosicionFruta()));
     }

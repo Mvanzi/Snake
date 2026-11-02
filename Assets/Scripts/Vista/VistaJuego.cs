@@ -3,17 +3,13 @@ using UnityEngine;
 
 public class VistaJuego : MonoBehaviour, IGameView
 {
-    [Header("Referencias de Escena")]
-    public GameObject camarita;
-    public GameObject plano;
+    [SerializeField] private GameObject camarita;
+    [SerializeField] private GameObject plano;
 
-    [Header("Prefabs Opcionales (si estan vacios, usa primitivas)")]
     [SerializeField] private GameObject prefabCuerpoSerpiente;
     [SerializeField] private GameObject prefabPared;
     [SerializeField] private GameObject prefabFruta;
 
-    [Header("Rendimiento y Suavizado")]
-    [SerializeField] private int targetFPS = 60;
     [SerializeField] private float suavizadoCamara = 8f;
     [SerializeField] private float suavizadoSerpiente = 18f;
 
@@ -27,7 +23,7 @@ public class VistaJuego : MonoBehaviour, IGameView
     private void Awake()
     {
         QualitySettings.vSyncCount = 0;
-        Application.targetFrameRate = targetFPS > 0 ? targetFPS : 60;
+        Application.targetFrameRate = 60;
 
         if (plano == null)
         {
@@ -85,14 +81,12 @@ public class VistaJuego : MonoBehaviour, IGameView
 
     private void Update()
     {
-        // 1. Interpolacion suave de la camara a 60+ FPS
         if (camarita != null && _camaraInicializada)
         {
             camarita.transform.position = Vector3.Lerp(camarita.transform.position, _objetivoCamara, suavizadoCamara * Time.deltaTime);
             camarita.transform.rotation = Quaternion.Euler(54f, 0f, 0f);
         }
 
-        // 2. Interpolacion suave de los cubos de la serpiente a 60+ FPS
         for (int i = 0; i < partesGraficasSerpiente.Count && i < _posicionesObjetivoSerpiente.Count; i++)
         {
             GameObject parte = partesGraficasSerpiente[i];
@@ -109,13 +103,11 @@ public class VistaJuego : MonoBehaviour, IGameView
 
     public void RenderSnake(IReadOnlyList<PosicionTablero> posicionesSerpiente)
     {
-        // 1. Instanciamos nuevos elementos si la serpiente crecio
         while (partesGraficasSerpiente.Count < posicionesSerpiente.Count)
         {
             GameObject nuevoSegmento = CrearInstancia(prefabCuerpoSerpiente, PrimitiveType.Cube, Color.red);
             nuevoSegmento.transform.SetParent(this.transform);
 
-            // El nuevo segmento nace en la cola (indice 0), exactamente en su posicion para evitar que vuele desde la esquina (0,0,0)
             Vector3 posCola = new Vector3(posicionesSerpiente[0].X, 0f, posicionesSerpiente[0].Z);
             nuevoSegmento.transform.position = posCola;
 
@@ -123,7 +115,6 @@ public class VistaJuego : MonoBehaviour, IGameView
             _posicionesObjetivoSerpiente.Insert(0, posCola);
         }
 
-        // 2. Destruimos elementos si la serpiente se achico (removiendo desde la cola)
         while (partesGraficasSerpiente.Count > posicionesSerpiente.Count)
         {
             Destroy(partesGraficasSerpiente[0]);
@@ -131,7 +122,6 @@ public class VistaJuego : MonoBehaviour, IGameView
             _posicionesObjetivoSerpiente.RemoveAt(0);
         }
 
-        // 3. Asignamos los objetivos a cada segmento
         for (int i = 0; i < posicionesSerpiente.Count; i++)
         {
             Vector3 destino = new Vector3(
@@ -141,7 +131,6 @@ public class VistaJuego : MonoBehaviour, IGameView
             );
             _posicionesObjetivoSerpiente[i] = destino;
 
-            // Si es la primera vez que se renderiza, posicionamos de forma instantanea
             if (!_camaraInicializada)
             {
                 partesGraficasSerpiente[i].transform.position = destino;

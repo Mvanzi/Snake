@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class SnakeBootstrapper : MonoBehaviour
 {
-    [Header("Vistas MVP (opcionales, se autodetectan si estan vacias)")]
     [SerializeField] private VistaJuego vistaJuego;
     [SerializeField] private VistaUserInterface vistaUI;
     [SerializeField] private InputKey inputKey;
@@ -14,7 +13,6 @@ public class SnakeBootstrapper : MonoBehaviour
 
     private void Awake()
     {
-        // 1. Obtener o agregar dinamicamente las vistas si no fueron asignadas
         if (vistaJuego == null)
         {
             vistaJuego = FindObjectOfType<VistaJuego>();
@@ -54,16 +52,9 @@ public class SnakeBootstrapper : MonoBehaviour
 
     private void Start()
     {
-        // 2. Instanciar el Modelo en C# puro
         IGameContext modelo = new GameModel();
-
-        // 3. Instanciar el Repositorio de guardado local (PlayerPrefs)
         ISaveRepository saveRepository = new PlayerPrefsSaveRepository();
-
-        // 4. Instanciar el Presentador orquestador en C# puro con todas sus dependencias
         _presenter = new SnakePresenter(modelo, vistaJuego, vistaUI, inputKey, ticks, saveRepository);
-
-        // 5. Iniciar el juego (MenuState)
         _presenter.Iniciar();
     }
 
@@ -75,4 +66,3 @@ public class SnakeBootstrapper : MonoBehaviour
         }
     }
 }
-
