@@ -1,13 +1,8 @@
-using UnityEngine;
-namespace Snake.Assets.Model
+public interface IDirection
 {
-
-    public interface IDirection
-    {
-        public Coordinate GetNextCoordinate(Coordinate current);
-        public IDirection TurnUp();
-        public IDirection TurnDown();
-        public IDirection TurnLeft();
-        public IDirection TurnRight();
-    }
+    Coordinate GetNextCoordinate(Coordinate current);
+    IDirection TurnUp();
+    IDirection TurnDown();
+    IDirection TurnLeft();
+    IDirection TurnRight();
 }

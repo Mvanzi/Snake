@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 
-public struct BoardCoordinate
+public readonly struct PosicionTablero
 {
-    public int X { get; set; }
-    public int Z { get; set; }
+    public int X { get; }
+    public int Z { get; }
 
-    public BoardCoordinate(int x, int z)
+    public PosicionTablero(int x, int z)
     {
         X = x;
         Z = z;
@@ -14,8 +14,8 @@ public struct BoardCoordinate
 
 public interface IGameView
 {
-    void RenderWalls(IEnumerable<BoardCoordinate> coordenadasParedes);
-    void RenderSnake(IReadOnlyList<BoardCoordinate> posicionesSerpiente);
-    void RenderFruit(BoardCoordinate posicionFruta);
+    void RenderWalls(IEnumerable<PosicionTablero> coordenadasParedes);
+    void RenderSnake(IReadOnlyList<PosicionTablero> posicionesSerpiente);
+    void RenderFruit(PosicionTablero posicionFruta);
     void ClearAll();
 }

@@ -1,7 +1,5 @@
 using System;
 
-ususing System;
-
 public enum KeyDirection
 {
     Up,

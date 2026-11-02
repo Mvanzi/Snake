@@ -270,19 +270,19 @@ public class GameManager : MonoBehaviour
 
     public void PlaceSnakePartAt(int r, int c)
     {
-        matrix[r, c].Snake = (new SnakeEntity());
+        matrix[r, c].CurrentEntity = new SnakeBodyEntity();
         //matrixSnake[r, c] = 1;
     }
 
     public void PlaceWallAt(int r, int c)
     {
-        matrix[r, c].Wall = (new WallEntity());
+        matrix[r, c].CurrentEntity = new WallEntity();
         //matrixWalls[r, c] = 1;
     }
 
     public void PlaceFrutitaAt(int r, int c)
     {
-        matrix[r, c].Fruit = (new FruitEntity());
+        matrix[r, c].CurrentEntity = new RegularFruit();
         //matrixFrutitas[r, c] =  1;
     }
 
@@ -291,17 +291,17 @@ public class GameManager : MonoBehaviour
 
     public bool IsWallAt(int r, int c)
     {
-        return matrix[r, c].HasWall();
+        return matrix[r, c].CurrentEntity is WallEntity;
     }
 
     public bool IsFruitAt(int r, int c)
     {
-        return matrix[r, c].HasFruit();
+        return matrix[r, c].CurrentEntity is FruitEntity;
     }
 
     public bool IsSnakeAt(int r, int c)
     {
-        return matrix[r, c].HasSnake();
+        return matrix[r, c].CurrentEntity is SnakeBodyEntity;
     }
 
 
@@ -310,12 +310,12 @@ public class GameManager : MonoBehaviour
 
     public void FreeSnakePartAt(int r, int c)
     {
-        matrix[r, c].Snake = null;
+        matrix[r, c].Clear();
     }
 
     public void FreeFruitAt(int r, int c)
     {
-        matrix[r, c].Fruit = null;
+        matrix[r, c].Clear();
     }
 
 
