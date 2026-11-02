@@ -4,8 +4,6 @@ using UnityEngine;
 public class VistaJuego : MonoBehaviour, IGameView
 {
     [SerializeField] private GameObject camarita;
-    [SerializeField] private GameObject plano;
-
     [SerializeField] private GameObject prefabCuerpoSerpiente;
     [SerializeField] private GameObject prefabPared;
     [SerializeField] private GameObject prefabFruta;
@@ -25,33 +23,9 @@ public class VistaJuego : MonoBehaviour, IGameView
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
 
-        if (plano == null)
+        if (camarita == null && Camera.main != null)
         {
-            plano = GameObject.Find("Plane") ?? GameObject.Find("Plano");
-            if (plano == null)
-            {
-                plano = GameObject.CreatePrimitive(PrimitiveType.Plane);
-                plano.name = "Plane";
-                plano.transform.position = new Vector3(20f, -0.5f, 20f);
-                plano.transform.localScale = new Vector3(4f, 1f, 4f);
-            }
-        }
-
-        if (camarita == null)
-        {
-            if (Camera.main != null)
-            {
-                camarita = Camera.main.gameObject;
-            }
-            else
-            {
-                camarita = GameObject.Find("Main Camera");
-            }
-        }
-
-        if (plano != null)
-        {
-            plano.transform.localScale = new Vector3(4f, 1f, 4f);
+            camarita = Camera.main.gameObject;
         }
     }
 
@@ -59,7 +33,7 @@ public class VistaJuego : MonoBehaviour, IGameView
     {
         foreach (PosicionTablero pos in coordenadasParedes)
         {
-            GameObject pared = CrearInstancia(prefabPared, PrimitiveType.Cube, Color.black);
+            GameObject pared = Instantiate(prefabPared);
             pared.transform.position = new Vector3(pos.X, 0f, pos.Z);
             pared.transform.SetParent(this.transform);
             partesGraficasPared.Add(pared);
@@ -72,7 +46,7 @@ public class VistaJuego : MonoBehaviour, IGameView
 
         if (laFrutita == null)
         {
-            laFrutita = CrearInstancia(prefabFruta, PrimitiveType.Cube, Color.yellow);
+            laFrutita = Instantiate(prefabFruta);
             laFrutita.transform.SetParent(this.transform);
         }
 
@@ -105,7 +79,7 @@ public class VistaJuego : MonoBehaviour, IGameView
     {
         while (partesGraficasSerpiente.Count < posicionesSerpiente.Count)
         {
-            GameObject nuevoSegmento = CrearInstancia(prefabCuerpoSerpiente, PrimitiveType.Cube, Color.red);
+            GameObject nuevoSegmento = Instantiate(prefabCuerpoSerpiente);
             nuevoSegmento.transform.SetParent(this.transform);
 
             Vector3 posCola = new Vector3(posicionesSerpiente[0].X, 0f, posicionesSerpiente[0].Z);
@@ -172,21 +146,5 @@ public class VistaJuego : MonoBehaviour, IGameView
             Destroy(laFrutita);
             laFrutita = null;
         }
-    }
-
-    private GameObject CrearInstancia(GameObject prefab, PrimitiveType primitivaPorDefecto, Color colorPorDefecto)
-    {
-        if (prefab != null)
-        {
-            return Instantiate(prefab);
-        }
-
-        GameObject primitiva = GameObject.CreatePrimitive(primitivaPorDefecto);
-        Renderer render = primitiva.GetComponent<Renderer>();
-        if (render != null)
-        {
-            render.material.color = colorPorDefecto;
-        }
-        return primitiva;
     }
 }
