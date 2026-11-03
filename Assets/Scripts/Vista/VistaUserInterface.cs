@@ -1,22 +1,15 @@
 using System;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
-using Button = UnityEngine.UI.Button;
 
 public class VistaUserInterface : MonoBehaviour, IUIView
 {
     [Header("Paneles")]
+    [SerializeField] private GameObject panelFondoDif;
     [SerializeField] private GameObject panelMenu;
     [SerializeField] private GameObject panelPerdiste;
     [SerializeField] private GameObject panelPausa;
     [SerializeField] private GameObject cartelGuardadoExitoso;
-
-    [Header("Botones")]
-    [SerializeField] private Button startButton;
-    [SerializeField] private Button continueButton;
-    [SerializeField] private Button restartButton;
-    [SerializeField] private Button resumeButton;
-    [SerializeField] private Button saveButton;
 
     public event Action OnStartClicked;
     public event Action OnRestartClicked;
@@ -24,110 +17,48 @@ public class VistaUserInterface : MonoBehaviour, IUIView
     public event Action OnContinueClicked;
     public event Action OnSaveClicked;
 
-    private float _mensajeGuardadoTimer;
-
     private void Awake()
     {
-        if (startButton != null)
-        {
-            startButton.onClick.AddListener(() => OnStartClicked?.Invoke());
-        }
 
-        if (continueButton != null)
-        {
-            continueButton.onClick.AddListener(() => OnContinueClicked?.Invoke());
-        }
+        panelPerdiste?.SetActive(false);
+        panelPausa?.SetActive(false);
+        cartelGuardadoExitoso?.SetActive(false);
 
-        if (restartButton != null)
-        {
-            restartButton.onClick.AddListener(() => OnRestartClicked?.Invoke());
-        }
-
-        if (resumeButton != null)
-        {
-            resumeButton.onClick.AddListener(() => OnResumeClicked?.Invoke());
-        }
-
-        if (saveButton != null)
-        {
-            saveButton.onClick.AddListener(() => OnSaveClicked?.Invoke());
-        }
+        ShowMenu();
     }
 
-    private void Update()
+    private void Start()
     {
-        if (cartelGuardadoExitoso != null && cartelGuardadoExitoso.activeSelf)
-        {
-            _mensajeGuardadoTimer -= Time.unscaledDeltaTime;
-            if (_mensajeGuardadoTimer <= 0f)
-            {
-                cartelGuardadoExitoso.SetActive(false);
-            }
-        }
+        ShowMenu();
     }
 
-    public void ShowMenu()
+    public void ClickIniciar() => OnStartClicked?.Invoke();
+    public void ClickReiniciar() => OnRestartClicked?.Invoke();
+    public void ClickReanudar() => OnResumeClicked?.Invoke();
+    public void ClickContinuar() => OnContinueClicked?.Invoke();
+    public void ClickGuardar() => OnSaveClicked?.Invoke();
+
+    public void ShowMenu() => ActivarPanel(panelMenu, true);
+    public void HideMenu() => ActivarPanel(panelMenu, false);
+    public void ShowGameOver() => ActivarPanel(panelPerdiste, true);
+    public void HideGameOver() => ActivarPanel(panelPerdiste, false);
+    public void ShowPause() => ActivarPanel(panelPausa, true);
+    public void HidePause() => ActivarPanel(panelPausa, false);
+
+    public void SetContinueButtonActive(bool active) { }
+
+    public void MostrarMensajeGuardado() => StartCoroutine(RutinaCartel(2f));
+
+    private IEnumerator RutinaCartel(float seg)
     {
-        if (panelMenu != null)
-        {
-            panelMenu.SetActive(true);
-        }
+        cartelGuardadoExitoso?.SetActive(true);
+        yield return new WaitForSecondsRealtime(seg);
+        cartelGuardadoExitoso?.SetActive(false);
     }
 
-    public void HideMenu()
+    private void ActivarPanel(GameObject panel, bool estado)
     {
-        if (panelMenu != null)
-        {
-            panelMenu.SetActive(false);
-        }
-    }
-
-    public void ShowGameOver()
-    {
-        if (panelPerdiste != null)
-        {
-            panelPerdiste.SetActive(true);
-        }
-    }
-
-    public void HideGameOver()
-    {
-        if (panelPerdiste != null)
-        {
-            panelPerdiste.SetActive(false);
-        }
-    }
-
-    public void ShowPause()
-    {
-        if (panelPausa != null)
-        {
-            panelPausa.SetActive(true);
-        }
-    }
-
-    public void HidePause()
-    {
-        if (panelPausa != null)
-        {
-            panelPausa.SetActive(false);
-        }
-    }
-
-    public void SetContinueButtonActive(bool active)
-    {
-        if (continueButton != null)
-        {
-            continueButton.gameObject.SetActive(active);
-        }
-    }
-
-    public void MostrarMensajeGuardado()
-    {
-        if (cartelGuardadoExitoso != null)
-        {
-            cartelGuardadoExitoso.SetActive(true);
-            _mensajeGuardadoTimer = 2f;
-        }
+        panel?.SetActive(estado);
+        panelFondoDif?.SetActive(estado);
     }
 }
