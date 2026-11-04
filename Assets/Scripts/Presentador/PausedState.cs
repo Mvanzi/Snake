@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 public class PausedState : IGameState
 {
     private readonly SnakePresenter _presenter;
@@ -51,13 +53,36 @@ public class PausedState : IGameState
         if (_presenter.SaveRepository != null && _modelo != null)
         {
             DatosPartidaGuardada datos = new DatosPartidaGuardada(
-                _modelo.ObtenerPosicionesParedes(),
-                _modelo.ObtenerPosicionesSerpiente(),
-                _modelo.ObtenerPosicionFruta(),
-                _modelo.SnakeDirection
+                MapearPosiciones(_modelo.ObtenerPosicionesParedes()),
+                MapearPosiciones(_modelo.ObtenerPosicionesSerpiente()),
+                MapearPosicion(_modelo.ObtenerPosicionFruta()),
+                MapearDireccionACadena(_modelo.SnakeDirection)
             );
             _presenter.SaveRepository.Guardar(datos);
             _vistaUI.MostrarMensajeGuardado();
         }
+    }
+
+    private List<PosicionTablero> MapearPosiciones(IReadOnlyList<Coordinate> coordenadas)
+    {
+        List<PosicionTablero> posiciones = new List<PosicionTablero>(coordenadas.Count);
+        for (int i = 0; i < coordenadas.Count; i++)
+        {
+            posiciones.Add(new PosicionTablero(coordenadas[i].X, coordenadas[i].Z));
+        }
+        return posiciones;
+    }
+
+    private PosicionTablero MapearPosicion(Coordinate coordenada)
+    {
+        return new PosicionTablero(coordenada.X, coordenada.Z);
+    }
+
+    private string MapearDireccionACadena(IDirection direccion)
+    {
+        if (direccion is UpDirection) return "Up";
+        if (direccion is DownDirection) return "Down";
+        if (direccion is LeftDirection) return "Left";
+        return "Right";
     }
 }

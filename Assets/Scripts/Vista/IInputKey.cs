@@ -1,13 +1,5 @@
 using System;
 
-public enum KeyDirection
-{
-    Up,
-    Down, 
-    Left,  
-    Right   
-}
-
 public interface IInputKey
 {
     event Action<KeyDirection> OnDirectionPressed;

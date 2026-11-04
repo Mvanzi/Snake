@@ -28,14 +28,6 @@ public class PlayerPrefsSaveRepository : ISaveRepository
         public List<CoordenadaDTO> paredes = new List<CoordenadaDTO>();
     }
 
-    private static readonly Dictionary<string, Func<IDirection>> _directionParsers = new Dictionary<string, Func<IDirection>>()
-    {
-        { "Up", () => new UpDirection() },
-        { "Down", () => new DownDirection() },
-        { "Left", () => new LeftDirection() },
-        { "Right", () => new RightDirection() }
-    };
-
     public bool HayPartidaGuardada()
     {
         return PlayerPrefs.HasKey(SAVE_KEY);
@@ -47,7 +39,7 @@ public class PlayerPrefsSaveRepository : ISaveRepository
 
         PartidaDTO dto = new PartidaDTO();
         dto.fruta = new CoordenadaDTO(datos.Fruta.X, datos.Fruta.Z);
-        dto.direccion = MapearDireccionACadena(datos.Direccion);
+        dto.direccion = datos.Direccion;
 
         for (int i = 0; i < datos.CuerpoSerpiente.Count; i++)
         {
@@ -74,20 +66,20 @@ public class PlayerPrefsSaveRepository : ISaveRepository
         PartidaDTO dto = JsonUtility.FromJson<PartidaDTO>(json);
         if (dto == null) return null;
 
-        List<Coordinate> paredes = new List<Coordinate>(dto.paredes.Count);
+        List<PosicionTablero> paredes = new List<PosicionTablero>(dto.paredes.Count);
         for (int i = 0; i < dto.paredes.Count; i++)
         {
-            paredes.Add(new Coordinate(dto.paredes[i].x, dto.paredes[i].z));
+            paredes.Add(new PosicionTablero(dto.paredes[i].x, dto.paredes[i].z));
         }
 
-        List<Coordinate> cuerpo = new List<Coordinate>(dto.serpiente.Count);
+        List<PosicionTablero> cuerpo = new List<PosicionTablero>(dto.serpiente.Count);
         for (int i = 0; i < dto.serpiente.Count; i++)
         {
-            cuerpo.Add(new Coordinate(dto.serpiente[i].x, dto.serpiente[i].z));
+            cuerpo.Add(new PosicionTablero(dto.serpiente[i].x, dto.serpiente[i].z));
         }
 
-        Coordinate fruta = new Coordinate(dto.fruta.x, dto.fruta.z);
-        IDirection direccion = MapearCadenaADireccion(dto.direccion);
+        PosicionTablero fruta = new PosicionTablero(dto.fruta.x, dto.fruta.z);
+        string direccion = dto.direccion;
 
         return new DatosPartidaGuardada(paredes, cuerpo, fruta, direccion);
     }
@@ -97,22 +89,4 @@ public class PlayerPrefsSaveRepository : ISaveRepository
         PlayerPrefs.DeleteKey(SAVE_KEY);
         PlayerPrefs.Save();
     }
-
-    private string MapearDireccionACadena(IDirection direccion)
-    {
-        if (direccion is UpDirection) return "Up";
-        if (direccion is DownDirection) return "Down";
-        if (direccion is LeftDirection) return "Left";
-        return "Right";
-    }
-
-    private IDirection MapearCadenaADireccion(string nombre)
-    {
-        if (nombre != null && _directionParsers.TryGetValue(nombre, out Func<IDirection> factory))
-        {
-            return factory.Invoke();
-        }
-        return new RightDirection();
-    }
 }
-

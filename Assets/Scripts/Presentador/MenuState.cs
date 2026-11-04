@@ -62,11 +62,16 @@ public class MenuState : IGameState
             DatosPartidaGuardada datos = _presenter.SaveRepository.Cargar();
             if (datos != null)
             {
-                _modelo.CargarPartida(datos.Paredes, datos.CuerpoSerpiente, datos.Fruta, datos.Direccion);
+                List<Coordinate> paredes = MapearACoordenadas(datos.Paredes);
+                List<Coordinate> cuerpo = MapearACoordenadas(datos.CuerpoSerpiente);
+                Coordinate fruta = new Coordinate(datos.Fruta.X, datos.Fruta.Z);
+                IDirection direccion = MapearCadenaADireccion(datos.Direccion);
+
+                _modelo.CargarPartida(paredes, cuerpo, fruta, direccion);
                 _vistaJuego.ClearAll();
-                _vistaJuego.RenderWalls(MapearPosiciones(_modelo.ObtenerPosicionesParedes()));
-                _vistaJuego.RenderSnake(MapearPosiciones(_modelo.ObtenerPosicionesSerpiente()));
-                _vistaJuego.RenderFruit(MapearPosicion(_modelo.ObtenerPosicionFruta()));
+                _vistaJuego.RenderWalls(datos.Paredes);
+                _vistaJuego.RenderSnake(datos.CuerpoSerpiente);
+                _vistaJuego.RenderFruit(datos.Fruta);
 
                 _presenter.CambiarEstado(new PlayingState(_presenter, _modelo, _vistaJuego, _vistaUI));
             }
@@ -94,5 +99,26 @@ public class MenuState : IGameState
     private PosicionTablero MapearPosicion(Coordinate coordenada)
     {
         return new PosicionTablero(coordenada.X, coordenada.Z);
+    }
+
+    private List<Coordinate> MapearACoordenadas(IReadOnlyList<PosicionTablero> posiciones)
+    {
+        List<Coordinate> coordenadas = new List<Coordinate>(posiciones.Count);
+        for (int i = 0; i < posiciones.Count; i++)
+        {
+            coordenadas.Add(new Coordinate(posiciones[i].X, posiciones[i].Z));
+        }
+        return coordenadas;
+    }
+
+    private IDirection MapearCadenaADireccion(string nombre)
+    {
+        switch (nombre)
+        {
+            case "Up": return new UpDirection();
+            case "Down": return new DownDirection();
+            case "Left": return new LeftDirection();
+            default: return new RightDirection();
+        }
     }
 }
